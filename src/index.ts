@@ -1,4 +1,5 @@
 import { auth, whoamiTop } from './commands/auth.js'
+import { attestations, policy, search } from './commands/inspect.js'
 import { repo } from './commands/repo.js'
 import { verify } from './commands/verify.js'
 import { parse } from './lib/args.js'
@@ -10,6 +11,10 @@ const USAGE = `phylax ${VERSION}
 
   phylax verify <artifact>     verify one package, for example npm/express@4.18.2
   phylax repo [path]           verify every dependency the lockfiles in path install
+  phylax attestations <ref>    list the attestations recorded for an artifact
+  phylax search <query>        search the catalogue
+  phylax policy evaluate <policy> <ref>
+                               evaluate an artifact against a policy
   phylax auth login            store an API token
   phylax auth whoami           show the plan this token is on
   phylax auth logout           forget the stored token
@@ -43,6 +48,12 @@ export async function run(argv: string[]): Promise<number> {
       return verify(args)
     case 'repo':
       return repo(args)
+    case 'attestations':
+      return attestations(args)
+    case 'search':
+      return search(args)
+    case 'policy':
+      return policy(args)
     case 'auth':
       return auth(args)
     case 'whoami':
