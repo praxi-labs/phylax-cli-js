@@ -1,0 +1,45 @@
+{
+  "name": "@phyi/cli",
+  "version": "0.1.0",
+  "description": "Verify a package before you install it, and gate a build on the verdict.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "phylax": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/praxi-labs/phylax-cli-js.git"
+  },
+  "homepage": "https://phyi.dev",
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --banner:js=\"#!/usr/bin/env node\" && node scripts/chmod-bin.mjs",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "phylax",
+    "cli",
+    "supply-chain",
+    "security"
+  ],
+  "dependencies": {
+    "@phyi/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
+  }
+}
