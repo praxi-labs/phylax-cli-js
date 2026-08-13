@@ -1,6 +1,6 @@
 {
   "name": "@phyi/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Verify a package before you install it, and gate a build on the verdict.",
   "license": "MIT",
   "type": "module",
