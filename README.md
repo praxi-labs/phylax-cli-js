@@ -1,6 +1,6 @@
 # @phyi/cli
 
-[![npm](https://img.shields.io/npm/v/@phyi/cli?label=npm&color=CB3837)](https://www.npmjs.com/package/@phyi/cli)
+[![status](https://img.shields.io/badge/npm-not_published_yet-lightgrey)](https://github.com/praxi-labs/phylax-cli-js)
 
 Verify a package before you install it, and gate a build on the verdict.
 
