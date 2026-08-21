@@ -23,6 +23,7 @@ Flags
   --json                       machine readable output
   --strict                     treat WARN as a failure
   --fail-on <verdict>          set the verdict that fails the command
+  --allow-uncovered            exit 0 when the network has not analysed the artifact
   --debug                      verbose diagnostics
   --version                    print the version
 

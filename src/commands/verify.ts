@@ -2,7 +2,7 @@ import { PhylaxSdk } from '@phyi/sdk'
 
 import type { Parsed } from '../lib/args.js'
 import { baseUrl, token } from '../lib/config.js'
-import { EXIT_UNRESOLVED, exitCodeFor, normaliseVerdict } from '../lib/exit.js'
+import { EXIT_ALLOW, EXIT_UNRESOLVED, exitCodeFor, normaliseVerdict } from '../lib/exit.js'
 import { emit, fail, findingSummary, line } from '../lib/output.js'
 import { normalise, ReferenceError_ } from '../lib/reference.js'
 
@@ -49,6 +49,16 @@ export async function verify(args: Parsed): Promise<number> {
   const body = result.data as Record<string, unknown>
   const verdict = normaliseVerdict(body.verdict)
   const detail = findingSummary(body.finding_counts)
+
+  if (String(body.coverage ?? '') === 'none') {
+    emit(body, args.json, line('UNKNOWN', reference, 'not evaluated by the network'))
+    if (!args.json) {
+      const reason = String(body.reason ?? 'This artifact has not been evaluated by the network.')
+      fail(reason)
+      fail('a verdict is only meaningful once the network has analysed the artifact')
+    }
+    return args.allowUncovered ? EXIT_ALLOW : EXIT_UNRESOLVED
+  }
 
   emit(body, args.json, line(verdict, reference, detail))
   return exitCodeFor(verdict, { strict: args.strict, failOn: args.failOn })

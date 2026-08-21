@@ -6,6 +6,7 @@ export interface Parsed {
   strict: boolean
   offline: boolean
   debug: boolean
+  allowUncovered: boolean
   help: boolean
   version: boolean
   failOn: string | undefined
@@ -16,6 +17,7 @@ const BOOLEAN_FLAGS = new Set([
   '--strict',
   '--offline',
   '--debug',
+  '--allow-uncovered',
   '--help',
   '-h',
   '--version',
@@ -60,6 +62,7 @@ export function parse(argv: string[]): Parsed {
     strict: flags.has('--strict'),
     offline: flags.has('--offline'),
     debug: flags.has('--debug'),
+    allowUncovered: flags.has('--allow-uncovered'),
     help: flags.has('--help') || flags.has('-h'),
     version: flags.has('--version') || flags.has('-v'),
     failOn,

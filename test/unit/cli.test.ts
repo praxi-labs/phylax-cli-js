@@ -109,3 +109,15 @@ describe('finding summary', () => {
     expect(findingSummary(null)).toBe('')
   })
 })
+
+describe('uncovered artifacts', () => {
+  it('parses the allow-uncovered flag', () => {
+    expect(parse(['verify', 'pkg:npm/express']).allowUncovered).toBe(false)
+    expect(parse(['verify', 'pkg:npm/express', '--allow-uncovered']).allowUncovered).toBe(true)
+  })
+
+  it('does not treat an uncovered artifact as allowed', () => {
+    expect(exitCodeFor('ALLOW')).toBe(EXIT_ALLOW)
+    expect(EXIT_UNRESOLVED).not.toBe(EXIT_ALLOW)
+  })
+})
