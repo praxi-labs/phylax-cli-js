@@ -61,7 +61,7 @@ async function whoami(args: Parsed): Promise<number> {
   }
 
   const body = result.data as Record<string, unknown>
-  const tier = String(body.tier ?? 'unknown')
+  const tier = String(body.plan ?? body.tier ?? 'unknown')
   emit(body, args.json, `tier: ${tier}`)
   return EXIT_ALLOW
 }
