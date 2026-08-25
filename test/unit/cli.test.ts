@@ -35,6 +35,15 @@ describe('artifact references', () => {
     expect(() => normalise('pkg:cocoapods/AFNetworking')).toThrow(ReferenceError_)
   })
 
+    it('passes an MCP server reference through unchanged', () => {
+    expect(normalise('mcp://acme/postgres-tools')).toBe('mcp://acme/postgres-tools')
+    expect(normalise('mcp://ditto-assistant/ditto-mcp')).toBe('mcp://ditto-assistant/ditto-mcp')
+  })
+
+  it('refuses an mcp:// reference with nothing after the scheme', () => {
+    expect(() => normalise('mcp://')).toThrow(ReferenceError_)
+  })
+
   it('refuses empty input', () => {
     expect(() => normalise('   ')).toThrow(ReferenceError_)
   })
