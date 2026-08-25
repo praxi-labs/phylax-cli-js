@@ -6,6 +6,13 @@ export function normalise(input: string): string {
   const raw = (input || '').trim()
   if (!raw) throw new ReferenceError_('no artifact given')
 
+  if (raw.startsWith('mcp://')) {
+    if (raw.length <= 'mcp://'.length) {
+      throw new ReferenceError_(`not a valid MCP server reference: ${raw}`)
+    }
+    return raw
+  }
+
   if (raw.startsWith('pkg:')) {
     const body = raw.slice(4)
     const slash = body.indexOf('/')
